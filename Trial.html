@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Form Design</title>
+    <style>
+        :root {
+            --primary: #4343e0;
+            --primary-light: #6767ec;
+            --secondary: #10ac84;
+            --dark: #222f3e;
+            --light: #f5f6fa;
+            --border: #dfe4ea;
+            --error: #ff4757;
+            --success: #2ed573;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(67, 67, 224, 0.1);
+        }
+
+        .form-control.is-invalid {
+            border-color: var(--error);
+        }
+
+        .form-control.is-valid {
+            border-color: var(--success);
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .radio-option input, .checkbox-option input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+
+        .radio-option label, .checkbox-option label {
+            margin-bottom: 0;
+            font-weight: 400;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 0.75rem;
+            color: var(--dark);
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        select.form-control {
+            appearance: none;
+            padding-right: 2rem;
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+        }
+
+        .form-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+            
+            .form-header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Animation classes */
+        .shake {
+            animation: shake 0.5s linear;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container fade-in">
+        <div class="form-header">
+            <h1>Contact Us</h1>
+            <p>Fill out the form below and we'll get back to you soon</p>
+        </div>
+
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
+                <div class="error-message">Please enter your name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+                <div class="error-message">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                <div class="error-message">Please enter a valid phone number</div>
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <div class="select-wrapper">
+                    <select id="subject" class="form-control" required>
+                        <option value="" disabled selected>Select a subject</option>
+                        <option value="support">Support</option>
+                        <option value="sales">Sales</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="error-message">Please select a subject</div>
+            </div>
+
+            <div class="form-group">
+                <label>Preferred Contact Method</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="contact-email" name="contactMethod" value="email" checked>
+                        <label for="contact-email">Email</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="contact-phone" name="contactMethod" value="phone">
+                        <label for="contact-phone">Phone</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="contact-both" name="contactMethod" value="both">
+                        <label for="contact-both">Either is fine</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Which services are you interested in? (Select all that apply)</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="service-web" name="services[]" value="web-design">
+                        <label for="service-web">Web Design</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="service-seo" name="services[]" value="seo">
+                        <label for="service-seo">SEO Services</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="service-social" name="services[]" value="social-media">
+                        <label for="service-social">Social Media Management</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="service-other" name="services[]" value="other">
+                        <label for="service-other">Other Services</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Your Message</label>
+                <textarea id="message" class="form-control" placeholder="Enter your message here..." required></textarea>
+                <div class="error-message">Please enter your message</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Form</button>
+
+            <div class="form-footer">
+                <p>By submitting this form, you agree to our <a href="#" tabindex="-1">Terms of Service</a> and <a href="#" tabindex="-1">Privacy Policy</a></p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('contactForm');
+            const inputs = form.querySelectorAll('.form-control[required]');
+            const selects = form.querySelectorAll('select[required]');
+            const textareas = form.querySelectorAll('textarea[required]');
+
+            // Add validation on blur
+            inputs.forEach(input => {
+                input.addEventListener('blur', validateField);
+                input.addEventListener('input', clearError);
+            });
+
+            selects.forEach(select => {
+                select.addEventListener('change', validateSelect);
+            });
+
+            textareas.forEach(textarea => {
+                textarea.addEventListener('blur', validateField);
+                textarea.addEventListener('input', clearError);
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+
+                // Validate all required fields
+                inputs.forEach(input => {
+                    if (!validateField({ target: input })) {
+                        isValid = false;
+                    }
+                });
+
+                selects.forEach(select => {
+                    if (!validateSelect({ target: select })) {
+                        isValid = false;
+                    }
+                });
+
+                textareas.forEach(textarea => {
+                    if (!validateField({ target: textarea })) {
+                        isValid = false;
+                    }
+                });
+
+                if (isValid) {
+                    // Here you would typically submit the form or send AJAX request
+                    alert('Form submitted successfully!');
+                    form.reset();
+                } else {
+                    form.classList.add('shake');
+                    setTimeout(() => form.classList.remove('shake'), 500);
+                }
+            });
+
+            function validateField(e) {
+                const field = e.target;
+                const errorElement = field.nextElementSibling;
+                
+                if (field.type === 'email') {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(field.value.trim())) {
+                        showError(field, errorElement, 'Please enter a valid email address');
+                        return false;
+                    }
+                } else if (field.type === 'tel' && field.value.trim() !== '') {
+                    const phoneRegex = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+                    if (!phoneRegex.test(field.value.trim())) {
+                        showError(field, errorElement, 'Please enter a valid phone number');
+                        return false;
+                    }
+                } else if (field.value.trim() === '') {
+                    showError(field, errorElement, 'This field is required');
+                    return false;
+                }
+
+                field.classList.remove('is-invalid');
+                field.classList.add('is-valid');
+                errorElement.style.display = 'none';
+                return true;
+            }
+
+            function validateSelect(e) {
+                const select = e.target;
+                const errorElement = select.nextElementSibling;
+                
+                if (select.value === '' || select.value === null) {
+                    showError(select, errorElement, 'This selection is required');
+                    return false;
+                }
+
+                select.classList.remove('is-invalid');
+                select.classList.add('is-valid');
+                errorElement.style.display = 'none';
+                return true;
+            }
+
+            function showError(field, errorElement, message) {
+                field.classList.remove('is-valid');
+                field.classList.add('is-invalid');
+                errorElement.textContent = message;
+                errorElement.style.display = 'block';
+            }
+
+            function clearError(e) {
+                const field = e.target;
+                const errorElement = field.nextElementSibling;
+                
+                if (field.classList.contains('is-invalid')) {
+                    field.classList.remove('is-invalid');
+                    errorElement.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
